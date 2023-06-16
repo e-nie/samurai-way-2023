@@ -31,6 +31,9 @@
 После git clone 'link' установите все зависимости из package.json:
 ### `yarn`
 
+
+## downloaded via zip file by me!!!
+
 а потом запустите проект:
 ### `yarn start`
 
