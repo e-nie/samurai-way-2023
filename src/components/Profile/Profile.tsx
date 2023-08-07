@@ -1,8 +1,11 @@
 import React from 'react';
+import s from './Profile.module.css'
+import MyPosts from "./MyPosts/MyPosts";
+
 
 const Profile = () => {
     return (
-        <div className = {'content'}>
+        <div className = {s.content}>
             <div>
                 <img
                     src = 'https://images.template.net/wp-content/uploads/2016/04/27051847/Cool-Nature-Wallpapaer-for-Download.jpg'
@@ -11,18 +14,7 @@ const Profile = () => {
             <div>
                 ava + description
             </div>
-            <div>
-                My posts
-                <div>
-                    New post
-                </div>
-                <div>
-                    post 1
-                </div>
-                <div>
-                    post 2
-                </div>
-            </div>
+           <MyPosts />
         </div>
     );
 };
