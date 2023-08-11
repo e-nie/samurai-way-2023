@@ -4,55 +4,24 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
+import Dialogs from "./components/Dialogs/Dialogs";
 
 function App() {
     return (
         // <BrowserRouter>
-            <div className = "app-wrapper">
+        <div className = "app-wrapper">
 
-                <Header />
-                <Navbar />
-               <Profile/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                {/*<Route path = {'/hello'} render = {() => <HelloMessage message = 'Hello Friends!' />} />*/}
-                {/*<Route path = {'/bye'} render = {() => <ByeMessage message = 'Bye Friends!' />} />*/}
+            <Header />
+            <Navbar />
+            <div className='app-wrapper-content'>
+            <Dialogs />
             </div>
+            {/*<Profile/>*/}
+
+
+            {/*<Route path = {'/hello'} render = {() => <HelloMessage message = 'Hello Friends!' />} />*/}
+            {/*<Route path = {'/bye'} render = {() => <ByeMessage message = 'Bye Friends!' />} />*/}
+        </div>
         // </BrowserRouter>
     )
         ;
