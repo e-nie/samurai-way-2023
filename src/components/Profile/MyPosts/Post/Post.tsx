@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Post.module.css'
-import {MessageType} from "../../../../index";
+
 
 type PostPropsType = {
     id:number
