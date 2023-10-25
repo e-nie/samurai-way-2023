@@ -1,6 +1,6 @@
 import s from './News.module.css'
 
-const News = (props: any) => {
+const News = (props:any) => {
     return (
         <div>
             News

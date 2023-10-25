@@ -1,20 +1,21 @@
 import React from 'react';
 import s from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {PostsType} from "../../index";
 
 
-const Profile = () => {
+
+export type ProfilePropsType = {
+    posts:PostsType[]
+}
+
+const Profile:React.FC<ProfilePropsType> = (props) => {
+
     return (
-        <div >
-            <div>
-                <img
-                    src = 'https://images.template.net/wp-content/uploads/2016/04/27051847/Cool-Nature-Wallpapaer-for-Download.jpg'
-                    alt = '' />
-            </div>
-            <div>
-                ava + description
-            </div>
-           <MyPosts />
+        <div>
+            <ProfileInfo />
+            <MyPosts posts={props.posts}  />
         </div>
     );
 };

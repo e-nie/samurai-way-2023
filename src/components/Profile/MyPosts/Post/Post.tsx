@@ -1,10 +1,11 @@
 import React from 'react';
 import s from './Post.module.css'
-import {MessageType} from "../MyPosts";
+import {MessageType} from "../../../../index";
 
 type PostPropsType = {
+    id:number
     message:string
-    likeCount:number
+    likesCount:number
 }
 
 const Post = (props: PostPropsType) => {
@@ -15,7 +16,7 @@ const Post = (props: PostPropsType) => {
                 src = 'https://static.vecteezy.com/system/resources/previews/002/002/257/original/beautiful-woman-avatar-character-icon-free-vector.jpg'
                 alt = '' />
             {props.message} {}
-            {props.likeCount}
+            {props.likesCount}
             <div>
                 <span>Like</span>
             </div>
