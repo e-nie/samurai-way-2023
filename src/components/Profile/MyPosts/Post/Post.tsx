@@ -6,6 +6,7 @@ type PostPropsType = {
     id:number
     message:string
     likesCount:number
+
 }
 
 const Post = (props: PostPropsType) => {
