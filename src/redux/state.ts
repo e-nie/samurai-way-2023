@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 export type PostType = {
     id: number
     message: string
@@ -17,7 +19,6 @@ export type MessageType = {
 export type ProfilePageType = {
     posts: PostType[]
 }
-
 
 export type DialogsPageType = {
     dialogs: DialogsType[]
@@ -58,7 +59,7 @@ export const state = {
 
 
 export const addPost = (postMessage: string) => {
-    debugger
     const newPost:PostType = {id: new Date().getTime(), message: postMessage, likesCount: 12}
     state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
 }

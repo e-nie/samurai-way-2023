@@ -15,14 +15,18 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-        debugger
         let text = newPostElement.current?.value
         if (typeof text === "string") {
             props.addPost(text)
-            // if(newPostElement.current) {
-            //     props.addPost(text)
-            // }
+            if (newPostElement.current) {
+                newPostElement.current.value = ''
+            }
         }
+
+        // if(newPostElement.current) {
+        //     props.addPost(text)
+        // }
+
     }
 
     return (
