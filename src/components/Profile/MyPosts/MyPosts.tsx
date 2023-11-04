@@ -17,7 +17,8 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-        props.addPost()
+debugger
+        props.addPost()// вызывается от имени пропсов
     }
 
     const postOnChange = () => {
