@@ -32,10 +32,32 @@ export type StateType = {
 export type StoreType = {
     _state: StateType
     getState: () => void
-    _rerenderEntireTree: (state: StateType) => void
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    subscribe(observer: (state: StateType) => void):()=> void
+    _callSubscriber:(state: StateType)=> void
+    // _rerenderEntireTree: (state: StateType) => void
+    // addPost: (postText:string) => void
+    // updateNewPostText: (newText: string) => void
+    subscribe:(observer: (state: StateType) => void) => void
+    dispatch:(action:AllActionsType)=> void
+}
+
+type AddPostActionType = ReturnType<typeof addPostAC>
+type UpdateNewPostActionType = ReturnType<typeof updateNewPostAC>
+
+
+export type AllActionsType = AddPostActionType |UpdateNewPostActionType
+
+export const addPostAC = (postText:string) => {
+    return {
+        type:'ADD-POST',
+        postText:postText
+    } as const
+}
+
+export const updateNewPostAC = (newText:string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: newText
+    } as const
 }
 
 export let store = {
@@ -66,32 +88,51 @@ export let store = {
             ]
         }
     },
+    _callSubscriber(state: StateType) {
+       console.log('State was changed');
+   },
     getState() {
         debugger
         return this._state
     },
-    _callSubscriber(state:StateType) {
-        console.log('State was changed');
-    },
-    addPost() {
-        debugger
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 12
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
-    },
-    subscribe(observer: (state: StateType) => void) {
+     subscribe(observer: (state: StateType) => void) {
         this._callSubscriber = observer
-    },
+     },
+    //todo delete addPost
+   // addPost() {
+   //      const newPost: PostType = {
+   //          id: new Date().getTime(),
+   //          message: this._state.profilePage.newPostText,
+   //          likesCount: 12
+   //      }
+   //      this._state.profilePage.posts.push(newPost)
+   //      this._state.profilePage.newPostText = ''
+   //      this._callSubscriber(this._state)
+   //  },
+    //todo delete updateNewPostText
+   // updateNewPostText(newText: string) {
+  //      this._state.profilePage.newPostText = newText
+   //     this._callSubscriber(this._state)
+   // },
+    dispatch(action:AllActionsType) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostType = {
+                id: new Date().getTime(),
+                // message: this._state.profilePage.newPostText,
+                message: action.postText,
+                likesCount: 12
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
+        }
+    }
 }
+
+
 
 
 //store = OOP
