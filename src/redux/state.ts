@@ -40,13 +40,14 @@ export type StoreType = {
     dispatch:(action:AllActionsType)=> void
 }
 
-type AddPostActionType = ReturnType<typeof addPostAC>
-type UpdateNewPostActionType = ReturnType<typeof updateNewPostAC>
+export type AddPostActionType = ReturnType<typeof addPostAC>
+export type UpdateNewPostActionType = ReturnType<typeof updateNewPostAC>
 
 
 export type AllActionsType = AddPostActionType |UpdateNewPostActionType
 
-export const addPostAC = (postText:string) => {
+export const addPostAC = (postText:string)  => {
+    console.log('newText-add-post', postText)
     return {
         type:'ADD-POST',
         postText:postText
@@ -54,6 +55,7 @@ export const addPostAC = (postText:string) => {
 }
 
 export const updateNewPostAC = (newText:string) => {
+    console.log('newText-update-post', newText)
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: newText
@@ -92,8 +94,7 @@ export let store = {
        console.log('State was changed');
    },
     getState() {
-        debugger
-        return this._state
+          return this._state
     },
      subscribe(observer: (state: StateType) => void) {
         this._callSubscriber = observer
