@@ -8,7 +8,8 @@ import React, {
 } from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {addPostAC, AddPostActionType, AllActionsType, PostType, updateNewPostAC} from "../../../redux/state";
+import {AllActionsType, PostType} from "../../../redux/state";
+import {addPostAC, updateNewPostAC} from "../../../redux/profile-reducer";
 
 
 type MyPostsPropsType = {
@@ -16,7 +17,6 @@ type MyPostsPropsType = {
     newPostText: string
     dispatch: (action: AllActionsType) => void
 }
-
 
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -48,10 +48,10 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                     <textarea ref = {newPostElement} onChange = {postOnChange} value = {props.newPostText} />
                 </div>
                 <div>
-                    <button  onClick = {addPost}>Add post
+                    <button onClick = {addPost}>Add post
                     </button>
                     <button>Remove</button>
-                    {/*<Button onClick={addPost}>Add post</Button>*/}//from the example below
+                    {/*<Button onClick={addPost}>Add post</Button>*/}
                 </div>
             </div>
             <div className = {s.posts}>
