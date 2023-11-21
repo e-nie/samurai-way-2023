@@ -7,33 +7,42 @@ import React, {
     useState
 } from 'react';
 
-import {DispatchType, StoreType} from "../../../redux/redux-store";
 import {addPostAC, updateNewPostAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
+import {StoreContext} from "../../../StoreContext";
 
 
 type MyPostsContainerPropsType = {
-   dispatch:DispatchType
-    profilePage: any
+    // dispatch: DispatchType
+    // profilePage: any
 
 }
 
 
 const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
-    const addPost = () => {
-        props.dispatch(addPostAC(props.profilePage.newPostText))
-    }
 
-    const onPostChange = (text: string) => {
-        let action = updateNewPostAC(text)
-        props.dispatch(action)// now newText in video
-    }
 
     return (
-        <MyPosts updateNewPostText = {onPostChange}
-                 addPost={addPost}
-                 posts = {props.profilePage.posts}
-                 newPostText={props.profilePage.newPostText}       />
+        <StoreContext.Consumer>
+            {
+            (store) => {
+                let state = store.getState()
+                const addPost = () => {
+                    store.dispatch(addPostAC(state.profilePage.newPostText))
+                }
+
+                const onPostChange = (text: string) => {
+                    let action = updateNewPostAC(text)
+                    store.dispatch(action)// now newText in video
+                }
+
+                return <MyPosts updateNewPostText = {onPostChange}
+                                addPost = {addPost}
+                                posts = {store.getState().profilePage.posts}
+                                newPostText = {store.getState().profilePage.newPostText} />
+            }
+        }
+        </StoreContext.Consumer>
     );
 }
 

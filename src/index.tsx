@@ -4,12 +4,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {BrowserRouter} from 'react-router-dom';
+import {Provider} from "./StoreContext";
 
 
 const rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store = {store} />
+            <Provider store = {store}>
+                <App />
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
