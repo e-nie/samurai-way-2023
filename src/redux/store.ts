@@ -1,5 +1,5 @@
-import {AddPostActionType, profileReducer, UpdateNewPostActionType} from "./profile-reducer";
-import {dialogsReducer, SendMessageActionType, UpdateNewMessageBodyActionType} from "./dialogs-reducer";
+import {AddPostActionType,  UpdateNewPostActionType} from "./profile-reducer";
+import { SendMessageActionType, UpdateNewMessageBodyActionType} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
 export type PostType = {
@@ -93,9 +93,9 @@ export let store = {
     },
 
     dispatch(action: AllActionsType) {
-
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        //
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         //❓ this._state.sidebar =  sidebarReducer(  this._state.sidebar, action)
 
         this._callSubscriber(this._state)

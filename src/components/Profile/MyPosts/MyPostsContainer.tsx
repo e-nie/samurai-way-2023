@@ -9,44 +9,31 @@ import React, {
 
 import {addPostAC, updateNewPostAC} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import {StoreContext} from "../../../StoreContext";
+import {connect} from "react-redux";
+import {AppStatetype, DispatchType} from "../../../redux/redux-store";
 
 
-type MyPostsContainerPropsType = {
-    // dispatch: DispatchType
-    // profilePage: any
 
+export const mapStateToProps = (state:AppStatetype) => {
+    return {
+        posts:state.profilePage.posts,
+        newPostText:state.profilePage.newPostText
+    }
 }
 
-
-const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
-
-
-    return (
-        <StoreContext.Consumer>
-            {
-            (store) => {
-                let state = store.getState()
-                const addPost = () => {
-                    store.dispatch(addPostAC(state.profilePage.newPostText))
-                }
-
-                const onPostChange = (text: string) => {
-                    let action = updateNewPostAC(text)
-                    store.dispatch(action)// now newText in video
-                }
-
-                return <MyPosts updateNewPostText = {onPostChange}
-                                addPost = {addPost}
-                                posts = {store.getState().profilePage.posts}
-                                newPostText = {store.getState().profilePage.newPostText} />
-            }
+export const mapDispatchToProps = (dispatch:DispatchType) => {
+    return {
+       addPost: () => {
+           dispatch(addPostAC( ))
+        },
+        updateNewPostText: (text:string)=> {
+            let action = updateNewPostAC(text)
+           dispatch(action)
         }
-        </StoreContext.Consumer>
-    );
+    }
 }
+export const MyPostsContainer = connect(mapStateToProps,mapDispatchToProps)(MyPosts)
 
-export default MyPostsContainer;
 
 
 /* Vladimir's example
