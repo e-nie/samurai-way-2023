@@ -3,19 +3,31 @@ import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer
 import {Dialogs} from "./Dialogs";
 
 import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {DialogsPageType} from "../../redux/store";
 
-type DialogsContainerPropsType = {
-    store: StoreType
+// type DialogsContainerPropsType = {
+//     store: StoreType
+// }
+
+export type MapStateToPropsType = {
+    dialogsPage:DialogsPageType
 }
 
+export type MapDispatchToPropsType = {
+    updateNewMessageBody:(body:string) => void
+    sendMessage:()=> void
+}
 
-const mapStateToProps = (state: AppStatetype) => {
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+const mapStateToProps = (state: AppStatetype):MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
     }
 }
 
-const mapDispatchToProps = (dispatch:DispatchType) => {
+const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToPropsType => {
     return {
         updateNewMessageBody: (body:string) => {
             dispatch(updateNewMessageBodyAC(body))
@@ -27,6 +39,6 @@ const mapDispatchToProps = (dispatch:DispatchType) => {
 }
 
 
-export const  DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const  DialogsContainer = connect<{  }, {  }, any, any>(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 
