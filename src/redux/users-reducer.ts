@@ -62,7 +62,8 @@ let initialState: InitialStateType = {
 
 }
 
-export const usersReducer = (state = initialState, action: UserActionsType): InitialStateType => {
+export const usersReducer = (state = initialState, action: UserActionsType) => {
+
     switch (action.type) {
         case FOLLOW: {
             return {
@@ -72,6 +73,7 @@ export const usersReducer = (state = initialState, action: UserActionsType): Ini
             }
         }
         case UNFOLLOW: {
+
             return {
                 ...state,
                 users: state.users.map(el => el.id === action.userId ? {...el, followed: false} : el)
@@ -85,7 +87,8 @@ export const usersReducer = (state = initialState, action: UserActionsType): Ini
             return state
     }
 }
-
+// followAC
+// unfollowAC
 export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users} as const)

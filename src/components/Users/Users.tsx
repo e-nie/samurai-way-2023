@@ -6,6 +6,7 @@ import s from './users.module.css'
 
 export const Users = (props: UsersPropsType) => {
 
+
     if (props.users.length === 0) {
         props.setUsers([
             {
@@ -14,7 +15,7 @@ export const Users = (props: UsersPropsType) => {
                 followed: false,
                 fullName: 'Evchen',
                 status: 'I am everywhere',
-                location: {country: 'UK', city: 'Paris'}
+                location: {country: 'France', city: 'Paris'}
             },
             {
                 id: 2,
@@ -44,10 +45,10 @@ export const Users = (props: UsersPropsType) => {
                     <div>
                         {u.followed
                             ? <button onClick = {() => {
-                                props.follow(u.id)
+                                props.unfollow(u.id)
                             }}>Unfollow</button>
                             : <button onClick = {() => {
-                                props.unfollow(u.id)
+                                props.follow(u.id)
                             }}>Follow</button>}
                     </div>
                 </span>
