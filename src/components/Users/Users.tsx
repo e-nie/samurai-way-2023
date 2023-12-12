@@ -7,15 +7,19 @@ import userPhoto from '../../assets/images/user.png'
 
 
 export const Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then(res => {
-                // debugger
-                props.setUsers(res.data.items)
-            })
+    const getUsers = () => {
+        if (props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(res => {
+                    // debugger
+                    props.setUsers(res.data.items)
+                })
+        }
     }
+
     return (
         <div>
+        <button  onClick={getUsers}>GET USERS</button>
             {props.users.map((u: UserType) => <div key = {u.id}>
                 <span>
                     <div>
