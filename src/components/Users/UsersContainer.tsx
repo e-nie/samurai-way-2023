@@ -1,9 +1,8 @@
 import React from 'react';
-import {Users} from "./Users";
+import Users from "./Users";
 import {connect} from "react-redux";
 import {
     followAC,
-
     setUsersAC,
     unfollowAC,
     UserType
@@ -34,10 +33,10 @@ const mapDispatchToProps = (dispatch: DispatchType): MapDispatchToPropsType => {
 
     return {
         follow: (userId: number) => {
-console.log(userId)
+            console.log(userId)
             dispatch(followAC(userId))
         },
-        unfollow: (userId: number) =>{
+        unfollow: (userId: number) => {
             console.log(userId)
             dispatch(unfollowAC(userId))
         },
@@ -49,3 +48,11 @@ console.log(userId)
 
 
 export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+
+//❗️So essentially, the connect function acts as a bridge between your presentational component and the Redux store,
+// returning a container component that has access to the Redux state and actions:
+//same as above:
+
+// function connect(mapStateToProps, mapDispatchToProps) {
+//     return UserContainer(Users);
+// }

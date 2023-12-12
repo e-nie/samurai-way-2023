@@ -1,5 +1,3 @@
-import {AllActionsType, PostType, ProfilePageType, StateType} from "./store";
-
 
 type LocationType = {
     city: string
