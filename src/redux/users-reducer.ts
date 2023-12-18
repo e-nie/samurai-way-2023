@@ -1,66 +1,52 @@
-
 type LocationType = {
     city: string
     country: string
 }
 
- export type UserType = {
+export type UserType = {
     id: number
     photoUrl: string
     followed: boolean
     name: string
     status: string
     location: LocationType
-     photos: {small: string, large: string}
+    photos: { small: string, large: string }
 
 }
 
 
 export type InitialStateType = {
     users: UserType[]
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 
 
 export type FollowActionType = ReturnType<typeof followAC>
 export type UnfollowActionType = ReturnType<typeof unfollowAC>
-
 export type setUsersActionType = ReturnType<typeof setUsersAC>
-export type UserActionsType = | setUsersActionType | UnfollowActionType | FollowActionType
+export type setCurrentPageActionType = ReturnType<typeof setCurrentPageAC>
+export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
 
+export type UserActionsType =
+    | setUsersActionType
+    | UnfollowActionType
+    | FollowActionType
+    | setCurrentPageActionType
+    | setTotalUsersCountActionType
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
-
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 let initialState: InitialStateType = {
-    users: [
-        // {
-        //     id: 1,
-        //     photoUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-        //     followed: false,
-        //     fullName: 'Evchen',
-        //     status: 'I am everywhere',
-        //     location: {country: 'UK', city: 'Paris'}
-        // },
-        // {
-        //     id: 2,
-        //     photoUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-        //     followed: false,
-        //     fullName: 'Ivonne',
-        //     status: 'I am everywhere',
-        //     location: {country: 'UK', city: 'London'}
-        // },
-        // {
-        //     id: 3,
-        //     photoUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-        //     followed: false,
-        //     fullName: 'Connor',
-        //     status: 'I am everywhere',
-        //     location: {country: 'Germany', city: 'Bonn'}
-        // }
-    ]
-
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 2
 }
 
 export const usersReducer = (state = initialState, action: UserActionsType) => {
@@ -74,15 +60,20 @@ export const usersReducer = (state = initialState, action: UserActionsType) => {
             }
         }
         case UNFOLLOW: {
-
             return {
                 ...state,
                 users: state.users.map(el => el.id === action.userId ? {...el, followed: false} : el)
             }
         }
-
         case SET_USERS : {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: [...action.users, ...state.users]}
+        }
+        case SET_CURRENT_PAGE: {
+            return {...state, currentPage: action.currentPage}
+        }
+        case SET_TOTAL_USERS_COUNT: {
+
+            return {...state, totalUsersCount:action.count}
         }
         default:
             return state
@@ -93,4 +84,6 @@ export const usersReducer = (state = initialState, action: UserActionsType) => {
 export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unfollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
 export const setUsersAC = (users: UserType[]) => ({type: SET_USERS, users} as const)
+export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalUsersCountAC = (totalUsersCount: number) => ({ type: SET_TOTAL_USERS_COUNT, count:totalUsersCount} as const)
 
