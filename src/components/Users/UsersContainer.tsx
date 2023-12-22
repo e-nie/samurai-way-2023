@@ -1,5 +1,3 @@
-import React from 'react';
-import Users from "./Users";
 import {connect} from "react-redux";
 import {
     followAC, setCurrentPageAC, setTotalUsersCountAC,
@@ -8,6 +6,10 @@ import {
     UserType
 } from "../../redux/users-reducer";
 import {AppStatetype, DispatchType} from "../../redux/redux-store";
+
+import React from "react";
+import axios from "axios";
+import Users from "./Users";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -26,6 +28,48 @@ type MapDispatchToPropsType = {
 }
 
 export type  UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+class UsersContainer extends React.Component<UsersPropsType> {
+    constructor(props: UsersPropsType) {
+        super(props);
+
+    }
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(res => {
+                this.props.setUsers(res.data.items)
+                this.props.setTotalUsersCount(res.data.totalCount)
+
+            })
+    }
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(res => {
+                this.props.setUsers(res.data.items)
+                this.props.setTotalUsersCount(res.data.totalCount)
+            })
+
+    }
+
+
+    render() {
+        return <Users
+            users = {this.props.users}
+            totalUsersCount = {this.props.totalUsersCount}
+            pageSize = {this.props.pageSize}
+            currentPage = {this.props.currentPage}
+            onPageChanged = {this.onPageChanged}
+            unfollow = {this.props.unfollow}
+            follow = {this.props.follow}
+            setCurrentPage = {this.props.setCurrentPage}
+            setTotalUsersCount = {this.props.setTotalUsersCount}
+            setUsers = {this.props.setUsers}
+        />
+    }
+}
 
 
 const mapStateToProps = (state: AppStatetype): MapStateToPropsType => {
@@ -62,7 +106,7 @@ const mapDispatchToProps = (dispatch: DispatchType): MapDispatchToPropsType => {
 }
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
 
 //❗️So essentially, the connect function acts as a bridge between your presentational component and the Redux store,
 // returning a container component that has access to the Redux state and actions:
