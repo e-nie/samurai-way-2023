@@ -3,7 +3,6 @@ import s from "./users.module.css";
 import {UserType} from "../../redux/users-reducer";
 import userPhoto from "../../assets/images/user.png";
 import {UsersPropsType} from "./UsersContainer";
-import {NavLink} from "react-router-dom";
 
 type UsersCallbackPropsType = {
     onPageChanged: (number: number) => void
@@ -35,10 +34,8 @@ const Users = (props: UsersFCPropsType) => {
             {props.users.map((u: UserType) => <div key = {u.id}>
                 <span>
                     <div>
-                        <NavLink to={`/profile/${u.id}`}>
                         <img src = {u.photos.small != null ? u.photos.small : userPhoto} className = {s.userPhoto}
                              alt = '' />
-                            </NavLink>
                     </div>
                     <div>
                         {u.followed

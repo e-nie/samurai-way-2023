@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {
-    follow, InitialStateType, setCurrentPage, setTotalUsersCount,
+    follow, setCurrentPage, setTotalUsersCount,
     setUsers, toggleIsFetching,
     unfollow,
     UserType

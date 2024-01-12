@@ -1,5 +1,5 @@
-import {AddPostActionType, SetUserProfileType, UpdateNewPostActionType, UserProfileType} from "./profile-reducer";
-import {SendMessageActionType, UpdateNewMessageBodyActionType} from "./dialogs-reducer";
+import {AddPostActionType,  UpdateNewPostActionType} from "./profile-reducer";
+import { SendMessageActionType, UpdateNewMessageBodyActionType} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
 export type PostType = {
@@ -21,7 +21,6 @@ export type MessageType = {
 export type ProfilePageType = {
     posts: PostType[]
     newPostText: string
-    profile: UserProfileType | null
 }
 
 export type DialogsPageType = {
@@ -51,7 +50,6 @@ export type AllActionsType = AddPostActionType
     | UpdateNewPostActionType
     | UpdateNewMessageBodyActionType
     | SendMessageActionType
-    | SetUserProfileType
 
 export let store = {
     _state:
@@ -100,7 +98,7 @@ export let store = {
         // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         //❓ this._state.sidebar =  sidebarReducer(  this._state.sidebar, action)
 
-        //this._callSubscriber(this._state)
+        this._callSubscriber(this._state)
 
 
     }
