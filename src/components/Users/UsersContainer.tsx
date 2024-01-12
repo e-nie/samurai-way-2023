@@ -1,8 +1,8 @@
 import {connect} from "react-redux";
 import {
-    followAC, setCurrentPageAC, setTotalUsersCountAC,
-    setUsersAC, toggleIsFetchingAC,
-    unfollowAC,
+    follow, setCurrentPage, setTotalUsersCount,
+    setUsers, toggleIsFetching,
+    unfollow,
     UserType
 } from "../../redux/users-reducer";
 import {AppStatetype, DispatchType} from "../../redux/redux-store";
@@ -65,7 +65,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-            {this.props.isFetching ? <Preloader/> : null}
+            {this.props.isFetching ? <Preloader /> : null}
             <Users
                 users = {this.props.users}
                 totalUsersCount = {this.props.totalUsersCount}
@@ -95,35 +95,38 @@ const mapStateToProps = (state: AppStatetype): MapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: DispatchType): MapDispatchToPropsType => {
+// const mapDispatchToProps = (dispatch: DispatchType): MapDispatchToPropsType => {
+//     return {
+//         follow: (userId: number) => {
+//             dispatch(followAC(userId))
+//         },
+//         unfollow: (userId: number) => {
+//             dispatch(unfollowAC(userId))
+//         },
+//         setUsers: (users: UserType[]) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (pageNumber: number) => {
+//             dispatch(setCurrentPageAC(pageNumber))
+//         },
+//         setTotalUsersCount: (totalCount: number) => {
+//             dispatch(setTotalUsersCountAC(totalCount))
+//         },
+//         toggleIsFetching: (isFetching) => {
+//             dispatch(toggleIsFetchingAC(isFetching))
+//         }
+//     }
+// }
 
 
-    return {
-        follow: (userId: number) => {
-            console.log(userId)
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId: number) => {
-            console.log(userId)
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users: UserType[]) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageNumber: number) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setTotalUsersCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow: follow,
+    unfollow: unfollow,
+    setUsers: setUsers,
+    setCurrentPage: setCurrentPage,
+    setTotalUsersCount: setTotalUsersCount,
+    toggleIsFetching: toggleIsFetching
+})(UsersContainer);
 
 //❗️So essentially, the connect function acts as a bridge between your presentational component and the Redux store,
 // returning a container component that has access to the Redux state and actions:
