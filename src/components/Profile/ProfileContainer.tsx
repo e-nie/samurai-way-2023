@@ -2,28 +2,37 @@ import Profile from "./Profile";
 import React from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {setUserProfile, UserProfileType} from "../../redux/profile-reducer";
 import {AppStatetype} from "../../redux/redux-store";
-import {ProfilePageType} from "../../redux/store";
+import {withRouter, RouteComponentProps} from "react-router";
 
-
-export type ProfilePropsType = {
-    // dispatch:DispatchType
-    // profilePage: ProfilePageType
-    // setUserProfile: (val: any) => void
-}
 
 type MapStateToPropsType = {
-    // profile: ProfilePageType
+    profile:  UserProfileType
 }
 
-class ProfileContainer extends React.Component<any> {
+type MapDispatchToPropsType = {
+    setUserProfile: (profile: UserProfileType)=> void
+}
+
+type PathParamsType = {
+    userId?: string
+}
+
+type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
+type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+    let userId = this.props.match.params.userId
+        if(!userId) {
+            userId = '2'
+        }
+
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
             .then(res => {
 
                         this.props.setUserProfile(res.data)
-
             })
     }
 
@@ -38,8 +47,10 @@ class ProfileContainer extends React.Component<any> {
 
 };
 
-let mapStateToProps = (state:AppStatetype)=> ({
-    profile:state.profilePage.profile
-})
+let mapStateToProps = (state:AppStatetype):MapStateToPropsType=> ({
+    profile: state.profilePage.profile
+}) as MapStateToPropsType
 
-export default connect(mapStateToProps, {setUserProfile}) (ProfileContainer);
+
+ let WithUrlDataContainerComponent =  withRouter(ProfileContainer)
+export default connect(mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent);

@@ -3,6 +3,8 @@ import s from './ProfileInfo.module.css'
 import {UserProfileType} from "../../../redux/profile-reducer";
 import {ProfilePageType} from "../../../redux/store";
 import Preloader from "../../common/Preloader/Preloader";
+import ava from '../../../assets/images/ava.jpeg'
+
 
 const ProfileInfo = (props:any) => {
     if(!props.profile ) {
@@ -16,8 +18,10 @@ const ProfileInfo = (props:any) => {
                     alt = '' />
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large} alt='profilePhoto'/>
-                ava + description
+                <img src={props.profile?.photos.large} alt='profilePhoto'
+                />
+                <img src = {ava} alt = '' className= {s.ava}/>
+               <span className= {s.avaName}>Shershavochka</span>
             </div>
 
         </div>
