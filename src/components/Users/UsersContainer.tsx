@@ -46,7 +46,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(res.data.items)
                 this.props.setTotalUsersCount(res.data.totalCount)
-
             })
     }
 
