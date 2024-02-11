@@ -2,13 +2,14 @@ import React from 'react';
 import s from './Header.module.css'
 import {NavLink} from "react-router-dom";
 import {PropsType} from "./HeaderContainer";
+import sun from '../../../src/assets/images/vecteezy_ai-generated-the-sun-artistic-style-illustration-cartoon-sun_35488997.png'
 
 
 
 const Header = (props: PropsType) => {
     return (
         <header className = {s.header}>
-            <img src = 'https://www.freeiconspng.com/thumbs/logo-design/rainbow-logo-design-transparent-0.png'
+            <img className= {s.logo} src = {sun}
                  alt = '' />
             <div className = {s.loginBlock}>
                 {props.isAuth

@@ -1,11 +1,10 @@
 .header {
     grid-area: h;
     background-color: #a97466;
+    height: 100px;
+
 }
 
-.header img {
-    width: 80px;
-}
 
 .loginBlock {
     float:right;
@@ -13,4 +12,10 @@
 
 .loginBlock a {
     color: white;
+}
+
+.logo{
+    height: 70px;
+    width:70px;
+
 }
