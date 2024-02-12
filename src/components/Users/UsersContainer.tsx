@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {
     follow, InitialStateType, setCurrentPage, setTotalUsersCount,
-    setUsers, toggleIsFetching,
+    setUsers, toggleFollowingProgress, toggleIsFetching,
     unfollow,
     UserType
 } from "../../redux/users-reducer";
@@ -19,6 +19,8 @@ type MapStateToPropsType = {
     totalUsersCount: number,
     currentPage: number
     isFetching: boolean
+    followingInProgress: number[]
+
 
 }
 
@@ -29,6 +31,8 @@ type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+
 }
 
 export type  UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -41,7 +45,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-
         usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
             .then(data => {
                 this.props.toggleIsFetching(false)
@@ -57,7 +60,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
         usersAPI.getUsers(pageNumber, this.props.pageSize)
             .then(data => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers( data.items)
+                this.props.setUsers(data.items)
             })
 
     }
@@ -79,7 +82,8 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 setCurrentPage = {this.props.setCurrentPage}
                 setTotalUsersCount = {this.props.setTotalUsersCount}
                 setUsers = {this.props.setUsers}
-            />
+                toggleFollowingProgress = {this.props.toggleFollowingProgress}
+                followingInProgress = {this.props.followingInProgress} />
         </>
     }
 }
@@ -91,7 +95,8 @@ const mapStateToProps = (state: AppStatetype): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -125,7 +130,8 @@ export default connect(mapStateToProps, {
     setUsers: setUsers,
     setCurrentPage: setCurrentPage,
     setTotalUsersCount: setTotalUsersCount,
-    toggleIsFetching: toggleIsFetching
+    toggleIsFetching: toggleIsFetching,
+    toggleFollowingProgress: toggleFollowingProgress
 })(UsersContainer);
 
 //❗️So essentially, the connect function acts as a bridge between your presentational component and the Redux store,
