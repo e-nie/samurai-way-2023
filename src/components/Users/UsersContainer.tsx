@@ -1,17 +1,15 @@
 import {connect} from "react-redux";
 import {
-    follow, InitialStateType, setCurrentPage, setTotalUsersCount,
-    setUsers, toggleFollowingProgress, toggleIsFetching,
-    unfollow,
+    followSuccess,
+    getUsers, setCurrentPage, setTotalUsersCount,
+    setUsers, toggleFollowingProgress, toggleIsFetching, unfollowSuccess, UnfollowSuccessActionType,
     UserType
-} from "../../redux/users-reducer";
-import {AppStatetype, DispatchType} from "../../redux/redux-store";
+} from "redux/users-reducer";
+import {AppStatetype} from "redux/redux-store";
 
 import React from "react";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -31,7 +29,8 @@ type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    // toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsers: any
 
 }
 
@@ -44,25 +43,11 @@ class UsersContainer extends React.Component<UsersPropsType> {
     }
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-                this.props.setTotalUsersCount(data.totalCount)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber)
-        this.props.toggleIsFetching(true)
-
-        usersAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
-
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
 
@@ -82,8 +67,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 setCurrentPage = {this.props.setCurrentPage}
                 setTotalUsersCount = {this.props.setTotalUsersCount}
                 setUsers = {this.props.setUsers}
-                toggleFollowingProgress = {this.props.toggleFollowingProgress}
-                followingInProgress = {this.props.followingInProgress} />
+                // toggleFollowingProgress = {this.props.toggleFollowingProgress}
+                followingInProgress = {this.props.followingInProgress}
+                getUsers = {this.props.getUsers}
+            />
         </>
     }
 }
@@ -125,13 +112,14 @@ const mapStateToProps = (state: AppStatetype): MapStateToPropsType => {
 
 
 export default connect(mapStateToProps, {
-    follow: follow,
-    unfollow: unfollow,
+    follow: followSuccess,
+    unfollow: unfollowSuccess,
     setUsers: setUsers,
     setCurrentPage: setCurrentPage,
     setTotalUsersCount: setTotalUsersCount,
     toggleIsFetching: toggleIsFetching,
-    toggleFollowingProgress: toggleFollowingProgress
+    toggleFollowingProgress: toggleFollowingProgress,
+    getUsers: getUsers
 })(UsersContainer);
 
 //❗️So essentially, the connect function acts as a bridge between your presentational component and the Redux store,
