@@ -3,7 +3,7 @@ import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {UserProfileType} from "../../redux/profile-reducer";
+import {getUserProfile, UserProfileType} from "../../redux/profile-reducer";
 import {ProfilePageType} from "../../redux/store";
 
 

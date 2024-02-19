@@ -54,7 +54,7 @@ const Users = (props: UsersFCPropsType) => {
                             }}>Follow</button>}
                     </div>
                 </span>
-                <span>
+                <span className={s.userText}>
                    <span><div>{u.name}</div>
                    <div>{u.status}</div>
                    </span>

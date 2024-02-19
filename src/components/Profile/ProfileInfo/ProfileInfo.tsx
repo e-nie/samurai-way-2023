@@ -6,22 +6,22 @@ import Preloader from "../../common/Preloader/Preloader";
 import ava from '../../../assets/images/ava.jpeg'
 
 
-const ProfileInfo = (props:any) => {
-    if(!props.profile ) {
-        return<Preloader/>
+const ProfileInfo = (props: any) => {
+    if (!props.profile) {
+        return <Preloader />
     }
+
+    const testIsPhotos = props.profile?.photos?.small ?? ava
     return (
         <div>
             <div>
-                <img
-                    src = 'https://images.template.net/wp-content/uploads/2016/04/27051847/Cool-Nature-Wallpapaer-for-Download.jpg'
-                    alt = '' />
-            </div>
-            <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large} alt='profilePhoto'
+                <img className = {s.mainPhoto}
+                     src = {testIsPhotos}
                 />
-                <img src = {ava} alt = '' className= {s.ava}/>
-               <span className= {s.avaName}>Shershavochka</span>
+            </div>
+            <div className = {s.descriptionBlock}>
+                <img src = {ava} alt = '' className = {s.ava} />
+                <span className = {s.avaName}>Shershavochka</span>
             </div>
 
         </div>
